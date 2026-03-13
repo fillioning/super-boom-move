@@ -1,10 +1,10 @@
 {
     "id": "superboum",
     "name": "Super Boum",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "abbrev": "BOUM",
     "description": "Master Bus Destructor & Harmonic Sculptor. OTO Boum-inspired distortion with 8-band filterbank, 10 preamp models, vocoder mode, and tape stage.",
-    "author": "move-anything",
+    "author": "fillioning",
     "dsp": "superboum.so",
     "api_version": 2,
     "capabilities": {

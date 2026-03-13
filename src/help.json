@@ -1,0 +1,140 @@
+{
+  "title": "Super Boum",
+  "children": [
+    {
+      "title": "Overview",
+      "lines": [
+        "Master bus destructor &",
+        "harmonic sculptor inspired",
+        "by the OTO Boum hardware.",
+        "",
+        "Signal chain: Input Gain,",
+        "Compressor, 8-Band Filter,",
+        "Distortion, Preamp (10",
+        "models), Tape Stage, Output.",
+        "",
+        "4 pages: Boum, Skulpt,",
+        "Pre&Comp, Seal."
+      ]
+    },
+    {
+      "title": "Boum Page",
+      "lines": [
+        "Input: input gain (0.5-4x)",
+        "Comp: compressor amount",
+        " with auto makeup gain",
+        "Drive: distortion drive",
+        " (1-20, higher = harder)",
+        "DrvMx: blend filtered-clean",
+        " with filtered+distorted",
+        "Mode: Boost/Tube/Fuzz/Square",
+        "Shift: filterbank frequency",
+        " offset (-2 to +2)",
+        "Mix: dry/wet balance",
+        "Level: output level (0-200%)"
+      ]
+    },
+    {
+      "title": "Skulpt Page",
+      "lines": [
+        "8-band filterbank. Knobs",
+        "1-8 control band gains:",
+        " Low, B2, B3, Mid,",
+        " B5, B6, B7, High.",
+        "Each band: 0-200%.",
+        "",
+        "Jog params:",
+        "M-Shft: mod shift (-100%",
+        " to +100%)",
+        "Flavor: 8 filterbank",
+        " presets (Bal, Form, Oct,",
+        " Thump, Radio, Acid,",
+        " Motwn, West)",
+        "Voc: vocoder mode (Off/On)",
+        "VocGn: vocoder gain"
+      ]
+    },
+    {
+      "title": "Pre&Comp Page",
+      "lines": [
+        "Atk: compressor attack",
+        " (50us to 33ms)",
+        "Rel: compressor release",
+        " (50ms to 1s)",
+        "Thresh: comp threshold",
+        "M-Drv: modulated drive",
+        "Pre: preamp model select",
+        " Cass1/Cass2: cassette tape",
+        " Mast: mastering tape",
+        " Slam: dual-stage tape",
+        " Thick: hard clip",
+        " 12bit/8bit: lo-fi digital",
+        " Brit/USA: console saturation",
+        " Cln: clean (bypass)",
+        "Grit: preamp drive amount",
+        "Gate: noise gate threshold",
+        "Link: stereo link amount"
+      ]
+    },
+    {
+      "title": "Seal Page",
+      "lines": [
+        "LoCut: high-pass filter",
+        " (Off/75/150/300 Hz)",
+        "HiCut: low-pass filter",
+        " (20-20000 Hz)",
+        "Sat: tape saturation",
+        "Age: tape degradation",
+        "Flutter: tape flutter",
+        " (speed wobble effect)",
+        "Bump: low-end tape bump",
+        "Limit: output limiter",
+        " (soft clip, Off/On)",
+        "Bypass: bypass all FX"
+      ]
+    },
+    {
+      "title": "Vocoder",
+      "lines": [
+        "Enable Voc on Skulpt page",
+        "to use mic/line-in as the",
+        "modulator signal.",
+        "",
+        "The mic controls per-band",
+        "envelope followers that",
+        "shape the main audio",
+        "(carrier) passing through",
+        "the 8-band filterbank.",
+        "",
+        "VocGn adjusts mic gain",
+        "(50%-200%). Higher values",
+        "make the vocoder respond",
+        "more aggressively."
+      ]
+    },
+    {
+      "title": "Tips",
+      "lines": [
+        "1. Start with Drive 1-3,",
+        " Mode=Tube for warm",
+        " master bus coloring.",
+        "",
+        "2. Use Skulpt bands to",
+        " sculpt frequency balance",
+        " before distortion hits.",
+        "",
+        "3. Cass1/Cass2 preamps add",
+        " subtle tape warmth. Slam",
+        " is more aggressive.",
+        "",
+        "4. Enable Limiter on Seal",
+        " page to tame peaks when",
+        " using heavy drive.",
+        "",
+        "5. Vocoder + Flavor presets",
+        " create unique talkbox-",
+        " style effects."
+      ]
+    }
+  ]
+}
