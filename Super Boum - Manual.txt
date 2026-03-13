@@ -1,0 +1,295 @@
+This is the official Operation Manual for the **Super Boum**, custom-tailored for the **Ableton Move-Anything** framework.
+
+---
+
+# SUPER BOUM: User Manual
+
+**Device Type:** Master Bus Destructor & Harmonic Sculptor
+**Platform:** Ableton Move (Standalone)
+
+## 1. Intent & Purpose
+
+The **Super Boum** is designed to be the final "warmth and grit" stage for your Ableton Move projects. While the Move is excellent for clean, digital production, the Super Boum provides the missing analog soul.
+
+It takes inspiration from the **OTO Boum** (for its aggressive compression and distortion) and the **Elektron Analog Heat** (for its filter-driven saturation). It is intended to live on your Master Bus to glue tracks together or on a Drum Group to turn thin samples into a heavy, pumping wall of sound.
+
+---
+
+## 2. Parameter Layout (The 8-Encoder Pages)
+
+Since the Ableton Move features 8 physical encoders, the Super Boum is organized into **four distinct pages**. You can toggle between these using the Move’s navigation buttons.
+
+### Page 1: THE CORE (Primary Performance)
+
+*Focus: The "Big Knobs" of the original hardware.*
+
+| Encoder | Parameter | Range | Description |
+| --- | --- | --- | --- |
+| **1** | **INPUT** | -inf to +12dB | Drives the preamp and sets the threshold for the compressor. |
+| **2** | **COMP** | 0 to 100% | 0–70%: Standard VCA compression. **70–100%: 1:-1 Negative Ratio.** |
+| **3** | **DRIVE** | 0 to 100% | The amount of signal hitting the distortion engine. |
+| **4** | **MODE** | 1–4 | Selects: **Boost**, **Tube**, **Fuzz**, or **Square**. |
+| **5** | **FLAVOR** | 1–8 | Selects the frequency map for the 8-band filterbank. |
+| **6** | **SHIFT** | -2 to +2 Oct | Globally shifts all 8 filter bands up or down. |
+| **7** | **MIX** | 0 to 100% | Parallel processing. Blend the clean transients with the crushed signal. |
+| **8** | **OUTPUT** | -inf to 0dB | Final volume safety after the tape stage. |
+
+---
+
+### Page 2: SKULPTUR (The 8-Band EQ)
+
+*Focus: Precision carving of the frequency spectrum.*
+
+| Encoder | Parameter | Band | Effect |
+| --- | --- | --- | --- |
+| **1** | **LOW** | Band 1 | Control the sub-thump or low-end rumble. |
+| **2** | **B2** | Band 2 | Low-mids. Clear out mud or add "boxiness" for character. |
+| **3** | **B3** | Band 3 | Lower-mids. Critical for snare weight. |
+| **4** | **MID** | Band 4 | The "voice" of the track. Pushes the distortion into the mids. |
+| **5** | **B5** | Band 5 | Upper-mids. Bite and presence. |
+| **6** | **B6** | Band 6 | High-mids. Harshness control or "crunch." |
+| **7** | **B7** | Band 7 | High frequencies. Brilliance and air. |
+| **8** | **HIGH** | Band 8 | Ultra-highs. Tape-hiss region or digital sparkle. |
+
+---
+
+### Page 3: MOVEMENT (Modulation & Pre)
+
+*Focus: Making the grit reactive and organic.*
+
+| Encoder | Parameter | Description |
+| --- | --- | --- |
+| **1** | **ATTACK** | How fast the envelope follower reacts to transients (1ms to 500ms). |
+| **2** | **RELEASE** | How long the modulation lingers (10ms to 2s). |
+| **3** | **MOD SHIFT** | How much the volume pushes the **Filter Shift** up/down. |
+| **4** | **MOD DRIVE** | How much the transients increase the **Distortion Drive**. |
+| **5** | **PRE TYPE** | Selector: Cassette, 12-bit Sampler, Neve Console, etc. |
+| **6** | **PRE GRIT** | Adds specific harmonic artifacts/noise based on the Preamp Type. |
+| **7** | **GATE** | A simple gate to keep the "Square" mode quiet during silence. |
+| **8** | **LINK** | Stereo Link strength (0% = Dual Mono, 100% = Full Link). |
+
+---
+
+### Page 4: THE SEAL (Mastering & Tone)
+
+*Focus: Final frequency taming.*
+
+| Encoder | Parameter | Description |
+| --- | --- | --- |
+| **1** | **LO-CUT** | 0 (Off), 1 (75Hz), 2 (150Hz), 3 (300Hz). 6dB/oct. |
+| **2** | **HI-CUT** | Variable 20kHz down to 500Hz. 12dB/oct Low Pass. |
+| **3** | **TAPE SAT** | Amount of magnetic tape saturation applied to the master. |
+| **4** | **TAPE AGE** | Mimics high-frequency roll-off of older tape heads. |
+| **5** | **FLUTTER** | Subtle pitch modulation for that "warped tape" feeling. |
+| **6** | **BUMP** | Low-end "Head Bump" resonance (adds weight at 60Hz). |
+| **7** | **THRESHOLD** | Fine-tune where the negative compressor starts "sucking." |
+| **8** | **BYPASS** | Clean bypass for A/B testing. |
+
+---
+
+## 3. Detailed Parameter Breakdown
+
+### The 1:-1 Negative Ratio (Encoder 1.2)
+
+When the **COMP** knob passes the 70% mark, the Super Boum enters "Negative" mode. In this state, any signal that exceeds the threshold is not just turned down—it is actually pushed *below* the threshold. This creates a violent, pumping "ducking" effect that breathes in time with your drums, similar to heavy sidechaining but much more aggressive.
+
+### The West Coast Flavor (Encoder 1.5, Mode 8)
+
+This is the "Secret Sauce." Most EQs use octaves (doubling frequencies). The **West Coast** flavor uses a **Major 7th** interval ($1.88\times$). When you boost these bands and drive them into the **Fuzz** or **Square** distortion, you get metallic, inharmonic textures that sound like Buchla-style synthesis rather than standard saturation.
+
+### 2x Oversampling
+
+Because you are running this on the Move, aliasing can be an issue with high-drive settings. The Super Boum internally doubles the sample rate to ensure that the **Square** and **Fuzz** modes remain smooth and "analog" without digital foldback noise.
+
+3. Detailed Parameter Breakdown (Continued)
+Page 1: THE CORE
+
+    1.1 INPUT: This is a dual-stage gain. It boosts the digital signal before it hits the Preamp modeling.
+
+        Note: Pushing this hard into the "Cassette" or "12-bit" preamps will increase the noise floor and harmonic saturation before it even reaches the compressor.
+
+    1.3 DRIVE: Sets the gain of the signal entering the Distortion engine.
+
+        Interaction: If your Filterbank sliders (Page 2) are all at zero, DRIVE will have no effect. It only saturates the frequencies allowed through the filters.
+
+    1.4 MODE: * Boost: A soft-clipper that rounds off peaks.
+
+        Tube: Asymmetrical waveshaping; adds even-order harmonics for "warmth."
+
+        Fuzz: Hard-clipping that creates a thick, compressed wall of sound.
+
+        Square: A pure comparator. It ignores dynamics and turns the signal into a pulse wave.
+
+    1.6 SHIFT: A bipolar control (-2 to +2 octaves). It scales the entire frequency matrix of the chosen Flavor up or down.
+
+    1.7 MIX: A standard linear dry/wet crossfader.
+
+        Tip: Use 100% for master bus glue, or 30-50% for "Parallel Compression" on drums.
+
+    1.8 OUTPUT: A final clean digital gain stage. Essential for compensating for the massive volume jumps caused by the Square distortion mode.
+
+Page 2: SKULPTUR (8-Band Parallel EQ)
+
+Unlike a series EQ, these 8 bands are Parallel. If all sliders are at 0, no sound passes to the distortion stage.
+
+    B1 - B8 GAIN: These determine the "mix" of frequencies sent into the heat.
+
+        Example: In West Coast mode, boosting only B1, B3, and B7 will create a dissonant, clanging harmonic structure while leaving the mid-range clean.
+
+Page 3: MOVEMENT
+
+    3.1 ATTACK (Env Follower): Range: 1ms to 500ms. Determines how quickly the modulation reacts to a transient. Short attacks catch the "snap" of a snare; long attacks allow the transient to pass before the modulation kicks in.
+
+    3.2 RELEASE (Env Follower): Range: 10ms to 2s. Controls how long the Shift or Drive stays "pushed" after the sound drops.
+
+    3.3 MOD SHIFT: Bipolar (-100% to +100%).
+
+        Positive: Loud sounds push the filter frequencies higher (Auto-wah effect).
+
+        Negative: Loud sounds pull the filter frequencies down (Ducking/Vowel closing).
+
+    3.4 MOD DRIVE: 0 to 100%. Links the volume to the Distortion heat.
+
+        Use Case: Set Drive (1.3) low and Mod Drive high. The sound stays clean when quiet but "explodes" during loud kicks or synth stabs.
+
+    3.6 PRE GRIT: This controls the internal artifacts of the Preamp.
+
+        In Cassette modes, this increases "Tape Hiss."
+
+        In Sampler modes, this increases "Aliasing" and "Clock Noise."
+
+    3.7 GATE: A threshold-based silencer. Because the Square mode and high Drive settings amplify the noise floor of the Preamps, the Gate ensures silence between notes.
+
+    3.8 LINK: Sets the correlation between L/R detection. At 100%, the loudest channel controls the compression for both sides. At 0%, it is Dual-Mono (not recommended for Master Bus).
+
+Page 4: THE SEAL
+
+    4.1 LO-CUT: A 1-pole (6dB/oct) high-pass filter.
+
+        Mode 1 (75Hz): Essential for removing DC offset and "mud."
+
+        Mode 3 (300Hz): Instant "Radio" effect.
+
+    4.2 HI-CUT: A 2-pole (12dB/oct) low-pass filter. Used to tame the "fizz" generated by the Square distortion.
+
+    4.3 TAPE SAT: Deepens the "S-Curve" saturation at the end of the chain.
+    *
+
+    4.4 TAPE AGE: A dynamic low-pass shelf. It mimics the high-frequency loss found on older, used magnetic tape.
+
+    4.5 FLUTTER: A small, random-rate LFO affecting pitch/delay time.
+    *
+
+    4.6 BUMP: Adds a +3dB resonant peak at 60Hz to mimic the physical "head bump" of professional reel-to-reel machines.
+
+    4.7 THRESHOLD: Fine-tunes the sensitivity of the Compressor. Useful if your input signal is very quiet.
+
+    4.8 BYPASS: A hard-wire bypass. Note: In bypass, oversampling is disabled to save Move CPU.
+
+---
+
+## 4. Suggested Use Cases
+
+1. **The "Glue" Master:** Page 1, Comp at 30%, Drive at 10%, Mode: Boost, Mix at 100%. Hi-Cut at 16kHz.
+2. **The Industrial Drum Room:** Page 1, Mode: Square, Drive at 60%, Flavor: Thump. Page 2, Boost the LOW and MID sliders. Mix at 40%.
+3. **The Lo-Fi Cassette:** Page 3, Pre Type: Cassette. Page 4, Tape Age high, Flutter at 20%. Roll the Hi-Cut down to 8kHz.
+
+5. Filterbank Mode Descriptions
+
+The Filterbank splits the signal into 8 parallel paths before they hit the distortion engine. Each mode changes the "resonance character" of your grit.
+
+    Mode 1: Balanced (Standard)
+
+        Spacing: Standard octaves (80Hz to 10kHz).
+
+        Sound: Transparent and even. Use this for general-purpose mastering or when you want the distortion to feel "flat" across the spectrum.
+
+    Mode 2: Formant (Vocalic)
+
+        Spacing: Logarithmically squeezed around the 500Hz to 2.5kHz range.
+
+        Sound: Mimics human vowel sounds (A,E,I,O,U). When driven hard, it makes your drums or synths "talk" or "growl."
+
+    Mode 3: Octave (Musical)
+
+        Spacing: Precise 12-TET octave jumps based on C (63.5Hz base).
+
+        Sound: Extremely musical. Harmonics generated here will feel "in tune" with your project’s key.
+
+    Mode 4: Thump (Sub-Focus)
+
+        Spacing: Densely packed in the low-end (40Hz to 400Hz).
+
+        Sound: Pure weight. This mode is designed to turn thin kicks into massive, distorted sub-monsters.
+
+    Mode 5: Radio (Bandpass)
+
+        Spacing: Narrowly focused between 300Hz and 4kHz.
+
+        Sound: Effectively cuts the "subs" and "air." Perfect for lo-fi "telephone" effects or making a sound sit in a specific pocket of a busy mix.
+
+    Mode 6: Acid (Resonant)
+
+        Spacing: Standard octaves but with high-Q (narrower) resonance.
+
+        Sound: Mimics the "chirp" of a 303 filter. When you sweep the SHIFT knob, it creates squelchy, liquid movements.
+
+    Mode 7: Hitsville (Motown)
+
+        Spacing: Based on the legendary Motown "Graphic EQ" (50Hz,130Hz,320Hz,800Hz,2kHz,5kHz,12.5kHz ).
+
+        Sound: Instant vintage vibe. It has a broad, musical "smear" that feels expensive and classic.
+
+    Mode 8: West Coast (Inharmonic)
+
+        Spacing: Inharmonic Major 7th intervals (1.88× frequency multiplier).
+
+        Sound: Metallic, glass-like, and aggressive. This is the most experimental mode, perfect for industrial textures or avant-garde sound design.
+
+
+The Master Frequency Table (Hz)
+Mode	Band 1	Band 2	Band 3	Band 4	Band 5	Band 6	Band 7	Band 8
+1. Balanced	80	160	320	640	1,200	2,500	5,000	10,000
+2. Formant	150	300	500	800	1,200	1,800	2,600	5,000
+3. Octave	63	125	250	500	1,000	2,000	4,000	8,000
+4. Thump	40	80	120	200	400	800	1,600	6,000
+5. Radio	300	450	700	1,000	1,400	2,000	2,800	4,000
+6. Acid	55	110	220	440	880	1,760	3,520	7,040
+7. Hitsville	50	130	320	800	2,000	5,000	12,500	16,000
+8. West Coast	29	115	411	777	1,500	2,800	5,200	11,000
+
+6. Preamp Mode Descriptions
+
+The Preamp is the "front-end" of the device. It adds the initial noise floor and harmonic saturation.
+
+    CASS_GRUNGE: Models a cheap, plastic-cased portable cassette recorder. High noise floor, significant "flutter" (pitch instability), and a "squeezed" mid-range.
+
+    CASS_GRIT: A higher-quality 4-track recorder (like a Tascam Portastudio). Punchy low-mids and a distinct "crunch" when the input is pushed into the red.
+
+    TAPE_MASTER: A clean, high-fidelity 1/2" mastering deck. Virtually no noise, but adds a subtle "sheen" and smooths out sharp transients.
+
+    TAPE_SLAM: A professional deck being pushed 10dB past its limit. The low end starts to "bloom" and the highs begin to naturally compress.
+
+    TAPE_THICK: Models an older, 15-ips tube-driven tape machine. Adds significant low-end warmth and a "slow" transient response.
+
+    SMPL_12BIT: Emulates the input stage of an SP-1200. Bit-depth reduction and a steep 15kHz low-pass filter create a "crunchy" and "dark" 90s hip-hop texture.
+
+    SMPL_DARK: Similar to the 12-bit mode but with an even more aggressive anti-aliasing filter. Sounds like audio coming out of a dusty old sampler.
+
+    CONS_BRIT: Models a Neve-style console with iron transformers. Adds a "weighty" and "solid" character to the low-mids.
+
+    CONS_USA: Models an API-style console. Faster, punchier, and "brighter" than the British counterpart. Excellent for drums.
+
+    CONS_MODERN: A clean, wide-bandwidth solid-state preamp. Use this when you want the Super Boum's filters and distortion to do all the work without adding "old" character.
+
+7. Tape & Mastering Section Descriptions
+
+This final stage "seals" the sound, ensuring the digital distortion doesn't sound "brittle."
+
+    TAPE SAT (Saturation): Controls the depth of the magnetic hysteresis. As you increase this, the signal becomes "glued" and "thicker."
+
+    TAPE AGE: Mimics the physical wear on tape heads and the tape itself. Increasing this rolls off the ultra-high frequencies (12kHz and above) and adds subtle harmonic instability.
+
+    FLUTTER: Controls the "motor speed" fluctuations. At low levels, it adds "organic movement." At high levels, it sounds like a warped record.
+
+    BUMP (Head Bump): A resonant peak at 60Hz. This is a physical byproduct of tape playback heads. It adds a "sub-boom" that makes the Move's output feel much larger than it is.

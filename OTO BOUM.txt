@@ -1,0 +1,105 @@
+# **BOUM: Analog Stereo Warming Unit**
+
+BOUM is a full analog stereo warming unit combining an easy-to-use compressor, a versatile distortion generator, and a smooth hi-cut filter. It is designed to add warmth, thickness, and character, or apply severe distortion and extreme compression treatments.
+
+---
+
+## **CORE FEATURES**
+
+* **Analog Signal Path:** 100% analog signal path and sidechain.
+* **One-Knob Compressor:** Control Ratio (1:1 to 1:-1) with adjustable Attack and Release.
+* **4 Distortion Circuits:** Boost, Tube, Fuzz, and Square.
+* **Variable Hi-Cut Filter:** 12 dB/octave (20 kHz to 20 Hz).
+* **Lo-Cut Filter:** 6 dB/octave (Flat, 75 Hz, 150 Hz, 300 Hz).
+* **Noise Gate:** Threshold up to 0 dB for creative chopping effects.
+* **Memory & Control:** 36 user presets and full MIDI control.
+
+---
+
+## **THE SIGNAL STAGES**
+
+### **1. INPUT GAIN**
+
+Boost your signal up to **+18 dB** to adapt to various levels, improve distortion content, and increase compressor sensitivity.
+
+> **Settings:** 0 dB, +6 dB, +12 dB, +18 dB
+
+### **2. COMPRESSOR**
+
+A unique one-knob interface controlling **Threshold, Ratio, and Makeup Gain** simultaneously.
+
+* **Ratio Range:** 1:1 (None) → $\infty$:1 (Limiter) → 1:-1 (Dynamic Reversal).
+* **Attack Times:** 50µs, 330µs, 1ms, 3.3ms, 10ms, 33ms.
+* **Release Times:** 50ms, 100ms, 250ms, 350ms, 500ms, 1s.
+
+### **3. LO-CUT FILTER**
+
+Attenuates bass frequencies **before** the distortion stage (6 dB/octave). This keeps the low end clean and makes the distorted signal easier to mix.
+
+> **Settings:** Flat, 75 Hz, 150 Hz, 300 Hz
+
+### **4. DISTORTION GENERATOR**
+
+Choose from four distinct analog circuits:
+
+* **BOOST:** Soft clipping; ideal for subtle harmonic enhancement.
+* **TUBE:** Asymmetrical distortion (MOSFET); generates 2nd-order harmonics.
+* **FUZZ:** Symmetrical hard clipping; sounds like an overdriven mixer preamp.
+* **SQUARE:** Pure square wave generator based on a comparator; the ultimate fuzz.
+
+### **5. HI-CUT FILTER**
+
+A musical 12 dB/octave filter used to soften high frequencies and "tame" harsh distortions.
+
+### **6. NOISE GATE**
+
+Removes floor noise or creates rhythmic "chopping" effects.
+
+> **Thresholds:** OFF, -50 dB, -40 dB, -30 dB, -20 dB, -10 dB, 0 dB.
+
+---
+
+## **TECHNICAL DEEP DIVE: THE COMPRESSOR POT**
+
+The **COMPRESSOR** pot simplifies complex dynamics into a single turn:
+
+1. **Threshold:** Varies between -30 and -15 dB.
+2. **Ratio:** Increases as you turn the knob.
+3. **Makeup:** Automatically compensates for the volume loss caused by compression.
+
+**Understanding the 1:-1 Ratio:**
+This is "over-compression." A 1 dB increase at the input above the threshold results in a 1 dB *decrease* at the output. This creates a "pumping" or dynamic reversal effect.
+
+| Ratio Layout |
+| --- |
+| 1:1 (Clean) |
+| 5:1 |
+| 10:1 |
+| INF:1 (Limiter) |
+| 1:-0.3 |
+| 1:-0.6 |
+| 1:-1 (Reversal) |
+
+---
+
+## **SIDECHAIN & GATE BEHAVIOR**
+
+When a signal is connected to the **Sidechain (SC) Input**:
+
+* **If Gate is NOT "OFF":** The SC input acts as a **Gate Trigger**. The BOUM signal only passes (opens) when a signal is detected at the SC input.
+* **If Gate is "OFF":** The SC input controls the **Compressor** normally (ducking/external triggering).
+
+---
+
+## **INTERFACE CONTROLS**
+
+BOUM features 6 function keys. Press a key to select a parameter, use the **DATA** pot to change the value, and press the key again to exit.
+
+1. **In Gain:** Input buffer gain.
+2. **Attack:** Compressor response speed.
+3. **Release:** Compressor recovery speed.
+4. **Lo Cut:** Pre-distortion filter.
+5. **Disto:** Circuit selection.
+6. **Gate:** Noise gate/chopper threshold.
+
+---

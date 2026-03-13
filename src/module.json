@@ -1,0 +1,88 @@
+{
+    "id": "superboum",
+    "name": "Super Boum",
+    "version": "1.0.0",
+    "abbrev": "BOUM",
+    "description": "Master Bus Destructor & Harmonic Sculptor. OTO Boum-inspired distortion with 8-band filterbank, 10 preamp models, vocoder mode, and tape stage.",
+    "author": "move-anything",
+    "dsp": "superboum.so",
+    "api_version": 2,
+    "capabilities": {
+        "chainable": true,
+        "component_type": "audio_fx",
+        "audio_in": true,
+        "chain_params": [
+            {"key": "inputGain", "name": "Input", "type": "float", "min": 0.5, "max": 4, "default": 1, "step": 0.01},
+            {"key": "compAmount", "name": "Comp", "type": "float", "min": 0, "max": 1, "default": 0, "step": 0.01},
+            {"key": "drive", "name": "Drive", "type": "float", "min": 1, "max": 20, "default": 1, "step": 0.01},
+            {"key": "driveMix", "name": "DrvMx", "type": "float", "min": 0, "max": 1, "default": 1, "step": 0.01},
+            {"key": "distMode", "name": "Mode", "type": "enum", "options": ["Boost","Tube","Fuzz","Square"], "default": 0},
+            {"key": "flavor", "name": "Flavor", "type": "enum", "options": ["Bal","Form","Oct","Thump","Radio","Acid","Motwn","West"], "default": 0},
+            {"key": "shift", "name": "Shift", "type": "float", "min": -2, "max": 2, "default": 0, "step": 0.01},
+            {"key": "mix", "name": "Mix", "type": "float", "min": 0, "max": 1, "default": 1, "step": 0.01},
+            {"key": "output", "name": "Level", "type": "float", "min": 0, "max": 2, "default": 1, "step": 0.01},
+            {"key": "b1", "name": "Low", "type": "float", "min": 0, "max": 2, "default": 1, "step": 0.01},
+            {"key": "b2", "name": "B2", "type": "float", "min": 0, "max": 2, "default": 1, "step": 0.01},
+            {"key": "b3", "name": "B3", "type": "float", "min": 0, "max": 2, "default": 1, "step": 0.01},
+            {"key": "b4", "name": "Mid", "type": "float", "min": 0, "max": 2, "default": 1, "step": 0.01},
+            {"key": "b5", "name": "B5", "type": "float", "min": 0, "max": 2, "default": 1, "step": 0.01},
+            {"key": "b6", "name": "B6", "type": "float", "min": 0, "max": 2, "default": 1, "step": 0.01},
+            {"key": "b7", "name": "B7", "type": "float", "min": 0, "max": 2, "default": 1, "step": 0.01},
+            {"key": "b8", "name": "High", "type": "float", "min": 0, "max": 2, "default": 1, "step": 0.01},
+            {"key": "micControl", "name": "Voc", "type": "enum", "options": ["Off","On"], "default": 0},
+            {"key": "vocGain", "name": "VocGn", "type": "float", "min": 0.5, "max": 2, "default": 1, "step": 0.01},
+            {"key": "modShift", "name": "M-Shft", "type": "float", "min": -1, "max": 1, "default": 0, "step": 0.01},
+            {"key": "atk", "name": "Atk", "type": "enum", "options": ["50us","330us","1ms","3.3ms","10ms","33ms"], "default": 0},
+            {"key": "rel", "name": "Rel", "type": "enum", "options": ["50ms","100ms","250ms","350ms","500ms","1s"], "default": 0},
+            {"key": "thresh", "name": "Thresh", "type": "float", "min": 0, "max": 1, "default": 0.9, "step": 0.01},
+            {"key": "modDrive", "name": "M-Drv", "type": "float", "min": 0, "max": 1, "default": 0, "step": 0.01},
+            {"key": "preType", "name": "Pre", "type": "enum", "options": ["Cass1","Cass2","Mast","Slam","Thick","12bit","8bit","Brit","USA","Cln"], "default": 9},
+            {"key": "grit", "name": "Grit", "type": "float", "min": 0, "max": 1, "default": 0, "step": 0.01},
+            {"key": "gate", "name": "Gate", "type": "enum", "options": ["Off","-50dB","-40dB","-30dB","-20dB","-10dB","0dB"], "default": 0},
+            {"key": "link", "name": "Link", "type": "float", "min": 0, "max": 1, "default": 1, "step": 0.01},
+            {"key": "loCut", "name": "LoCut", "type": "enum", "options": ["Off","75","150","300"], "default": 0},
+            {"key": "hiCut", "name": "HiCut", "type": "int", "min": 20, "max": 20000, "default": 20000, "step": 10},
+            {"key": "sat", "name": "Sat", "type": "float", "min": 0, "max": 1, "default": 0, "step": 0.01},
+            {"key": "age", "name": "Age", "type": "float", "min": 0, "max": 1, "default": 0, "step": 0.01},
+            {"key": "flutter", "name": "Flutter", "type": "float", "min": 0, "max": 1, "default": 0, "step": 0.01},
+            {"key": "bump", "name": "Bump", "type": "float", "min": 0, "max": 1, "default": 0, "step": 0.01},
+            {"key": "limiter", "name": "Limit", "type": "enum", "options": ["Off","On"], "default": 0},
+            {"key": "bypass", "name": "Bypass", "type": "enum", "options": ["On","Byp"], "default": 0}
+        ],
+        "ui_hierarchy": {
+            "modes": null,
+            "levels": {
+                "root": {
+                    "name": "Super Boum",
+                    "knobs": ["inputGain", "compAmount", "drive", "driveMix", "distMode", "shift", "mix", "output"],
+                    "params": [
+                        {"level": "BOUM", "label": "Boum"},
+                        {"level": "SKULPT", "label": "Skulpt"},
+                        {"level": "PRECOMP", "label": "Pre&Comp"},
+                        {"level": "SEAL", "label": "Seal"}
+                    ]
+                },
+                "BOUM": {
+                    "label": "Boum",
+                    "knobs": ["inputGain", "compAmount", "drive", "driveMix", "distMode", "shift", "mix", "output"],
+                    "params": ["inputGain", "compAmount", "drive", "driveMix", "distMode", "shift", "mix", "output"]
+                },
+                "SKULPT": {
+                    "label": "Skulpt",
+                    "knobs": ["b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"],
+                    "params": ["b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "modShift", "flavor", "micControl", "vocGain"]
+                },
+                "PRECOMP": {
+                    "label": "Pre&Comp",
+                    "knobs": ["atk", "rel", "thresh", "modDrive", "preType", "grit", "gate", "link"],
+                    "params": ["atk", "rel", "thresh", "modDrive", "preType", "grit", "gate", "link"]
+                },
+                "SEAL": {
+                    "label": "Seal",
+                    "knobs": ["loCut", "hiCut", "sat", "age", "flutter", "bump", "limiter", "bypass"],
+                    "params": ["loCut", "hiCut", "sat", "age", "flutter", "bump", "limiter", "bypass"]
+                }
+            }
+        }
+    }
+}

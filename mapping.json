@@ -1,0 +1,58 @@
+{
+  "name": "Super Boum",
+  "version": "1.0.0",
+  "pages": [
+    {
+      "name": "BOUM",
+      "knobs": [
+        {"name": "Input", "id": "inputGain", "min": 0.0, "max": 4.0, "default": 1.0},
+        {"name": "Comp", "id": "compAmount", "min": 0.0, "max": 1.0, "default": 0.0},
+        {"name": "Drive", "id": "drive", "min": 1.0, "max": 20.0, "default": 1.0},
+        {"name": "Mode", "id": "distMode", "min": 0, "max": 3, "labels": ["Boost", "Tube", "Fuzz", "Square"]},
+        {"name": "Flavor", "id": "flavor", "min": 0, "max": 7, "labels": ["Bal", "Form", "Oct", "Thump", "Radio", "Acid", "Motwn", "West"]},
+        {"name": "Shift", "id": "shift", "min": -2.0, "max": 2.0, "default": 0.0},
+        {"name": "Mix", "id": "mix", "min": 0.0, "max": 1.0, "default": 1.0},
+        {"name": "Level", "id": "output", "min": 0.0, "max": 2.0, "default": 1.0}
+      ]
+    },
+    {
+      "name": "SKULPT",
+      "knobs": [
+        {"name": "Low", "id": "b1", "min": 0.0, "max": 2.0},
+        {"name": "B2", "id": "b2", "min": 0.0, "max": 2.0},
+        {"name": "B3", "id": "b3", "min": 0.0, "max": 2.0},
+        {"name": "Mid", "id": "b4", "min": 0.0, "max": 2.0},
+        {"name": "B5", "id": "b5", "min": 0.0, "max": 2.0},
+        {"name": "B6", "id": "b6", "min": 0.0, "max": 2.0},
+        {"name": "B7", "id": "b7", "min": 0.0, "max": 2.0},
+        {"name": "High", "id": "b8", "min": 0.0, "max": 2.0}
+      ]
+    },
+    {
+      "name": "MOVE",
+      "knobs": [
+        {"name": "Atk", "id": "atk", "min": 0.001, "max": 0.5},
+        {"name": "Rel", "id": "rel", "min": 0.01, "max": 2.0},
+        {"name": "M-Shft", "id": "modShift", "min": -1.0, "max": 1.0},
+        {"name": "M-Drv", "id": "modDrive", "min": 0.0, "max": 1.0},
+        {"name": "Pre", "id": "preType", "min": 0, "max": 9, "labels": ["Cass1", "Cass2", "Mast", "Slam", "Thick", "12bit", "8bit", "Brit", "USA", "Cln"]},
+        {"name": "Grit", "id": "grit", "min": 0.0, "max": 1.0},
+        {"name": "Gate", "id": "gate", "min": 0.0, "max": 1.0},
+        {"name": "Link", "id": "link", "min": 0.0, "max": 1.0}
+      ]
+    },
+    {
+      "name": "SEAL",
+      "knobs": [
+        {"name": "LoCut", "id": "loCut", "min": 0, "max": 3, "labels": ["Off", "75", "150", "300"]},
+        {"name": "HiCut", "id": "hiCut", "min": 20, "max": 20000, "default": 20000},
+        {"name": "Sat", "id": "sat", "min": 0.0, "max": 1.0},
+        {"name": "Age", "id": "age", "min": 0.0, "max": 1.0},
+        {"name": "Flutter", "id": "flutter", "min": 0.0, "max": 1.0},
+        {"name": "Bump", "id": "bump", "min": 0.0, "max": 1.0},
+        {"name": "Thresh", "id": "thresh", "min": 0.0, "max": 1.0},
+        {"name": "Bypass", "id": "bypass", "min": 0, "max": 1, "labels": ["On", "Byp"]}
+      ]
+    }
+  ]
+}

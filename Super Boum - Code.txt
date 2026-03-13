@@ -1,0 +1,249 @@
+/**
+ * ==============================================================================
+ * SUPER BOUM - THE DEFINITIVE MONSTER (Move-Anything Framework Edition)
+ * ==============================================================================
+ * Sourced from OTO hardware specs and Airwindows-style DSP primitives.
+ * * SIGNAL FLOW:
+ * Input Gain (+18dB) -> Preamp (10 Models) -> Compressor (1:-1 Negative Ratio)
+ * -> Parallel Filterbank (8 Flavors) -> Distortion (4 Modes)
+ * -> Wet Filters (Lo-Cut 6dB / Hi-Cut 12dB) -> Mix (Dry/Wet) -> Final Tape Stage
+ * ==============================================================================
+ */
+
+#pragma once
+#include <cmath>
+#include <algorithm>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846f
+#endif
+
+class SuperBoum {
+public:
+    // --- PARAMETER STRUCTURE (Maps to 4 Pages on Move) ---
+    struct Params {
+        // Page 1: BOUM (Performance)
+        float inputGain;   // 0.0 to 4.0 (up to +12dB/18dB)
+        float compAmount;  // 0.0 to 1.0 (0.7+ is negative ratio)
+        float flavor;      // 0.0 to 7.0 (Filter Matrix Selector)
+        float shift;       // -2.0 to 2.0 (Global Freq Octave Shift)
+        float drive;       // 1.0 to 20.0 (Distortion Heat)
+        float distMode;    // 0.0 to 3.0 (Boost, Tube, Fuzz, Square)
+        float mix;         // 0.0 to 1.0 (Dry/Wet)
+        float output;      // 0.0 to 2.0 (Post-Mix Gain)
+
+        // Page 2: SKULPT (8-Band Parallel Gains)
+        float bands[8];    // 0.0 to 2.0 per band
+
+        // Page 3: MOVE (Modulation & Pre)
+        float atk;         // 0.001 to 0.5 (seconds)
+        float rel;         // 0.01 to 2.0 (seconds)
+        float modShift;    // -1.0 to 1.0
+        float modDrive;    // 0.0 to 1.0
+        float preType;     // 0.0 to 9.0 (10 Models)
+        float grit;        // 0.0 to 1.0 (Preamp Saturation/Noise)
+        float gate;        // 0.0 to 1.0 (Threshold)
+        float link;        // 0.0 to 1.0 (Stereo Link)
+
+        // Page 4: SEAL (Mastering)
+        float loCut;       // 0, 1, 2, 3 (Off, 75, 150, 300)
+        float hiCut;       // 20Hz to 20kHz
+        float sat;         // 0.0 to 1.0 (Final Tape Sat)
+        float age;         // 0.0 to 1.0 (Tape Roll-off)
+        float flutter;     // 0.0 to 1.0 (Random Pitch LFO)
+        float bump;        // 0.0 to 1.0 (60Hz Head Bump)
+        float thresh;      // 0.0 to 1.0 (Comp Sensitivity)
+        float bypass;      // 0.0 or 1.0
+    };
+
+    // --- FREQUENCY MATRICES (8 Flavors x 8 Bands) ---
+    const float freqMatrix[8][8] = {
+        {80, 160, 320, 640, 1200, 2500, 5000, 10000},     // 0: Balanced
+        {150, 300, 500, 800, 1200, 1800, 2600, 5000},     // 1: Formant
+        {63, 125, 250, 500, 1000, 2000, 4000, 8000},      // 2: Octave
+        {40, 80, 120, 200, 400, 800, 1600, 6000},         // 3: Thump
+        {300, 450, 700, 1000, 1400, 2000, 2800, 4000},    // 4: Radio
+        {55, 110, 220, 440, 880, 1760, 3520, 7040},       // 5: Acid
+        {50, 130, 320, 800, 2000, 5000, 12500, 16000},    // 6: Hitsville
+        {29, 115, 411, 777, 1500, 2800, 5200, 11000}      // 7: West Coast
+    };
+
+    // --- BIQUAD FILTER STRUCTURE ---
+    struct Biquad {
+        float b0, b1, b2, a1, a2, z1L, z2L, z1R, z2R;
+        void reset() { z1L = z2L = z1R = z2R = 0.0f; }
+
+        void setLP(float f, float q, float fs) {
+            float w0 = 2.0f * M_PI * f / fs;
+            float cosW = std::cos(w0);
+            float alpha = std::sin(w0) / (2.0f * q);
+            float a0 = 1.0f + alpha;
+            b0 = (1.0f - cosW) / 2.0f / a0; b1 = (1.0f - cosW) / a0; b2 = b0;
+            a1 = (-2.0f * cosW) / a0; a2 = (1.0f - alpha) / a0;
+        }
+        void setHP(float f, float q, float fs) {
+            float w0 = 2.0f * M_PI * f / fs;
+            float cosW = std::cos(w0);
+            float alpha = std::sin(w0) / (2.0f * q);
+            float a0 = 1.0f + alpha;
+            b0 = (1.0f + cosW) / 2.0f / a0; b1 = -(1.0f + cosW) / a0; b2 = b0;
+            a1 = (-2.0f * cosW) / a0; a2 = (1.0f - alpha) / a0;
+        }
+        void setBP(float f, float q, float fs) {
+            float w0 = 2.0f * M_PI * f / fs;
+            float alpha = std::sin(w0) / (2.0f * q);
+            float a0 = 1.0f + alpha;
+            b0 = alpha / a0; b1 = 0.0f; b2 = -alpha / a0;
+            a1 = (-2.0f * std::cos(w0)) / a0; a2 = (1.0f - alpha) / a0;
+        }
+        inline float processL(float x) {
+            float out = b0 * x + z1L;
+            z1L = b1 * x - a1 * out + z2L; z2L = b2 * x - a2 * out;
+            return out;
+        }
+        inline float processR(float x) {
+            float out = b0 * x + z1R;
+            z1R = b1 * x - a1 * out + z2R; z2R = b2 * x - a2 * out;
+            return out;
+        }
+    };
+
+    SuperBoum() : seed(12345), env(0.0f), osL(0.0f), osR(0.0f) { reset(); }
+
+    void reset() {
+        for (int i = 0; i < 8; ++i) bank[i].reset();
+        loCutF.reset(); hiCutF.reset();
+        env = 0.0f; osL = osR = 0.0f;
+    }
+
+    // --- MAIN DSP PROCESS ---
+    void process(float* bufferL, float* bufferR, int numSamples, const Params& p, float fs) {
+        if (p.bypass > 0.5f) return;
+
+        // 1. BLOCK-RATE COEFF UPDATE (Saves CPU on Move)
+        float shiftMult = std::pow(2.0f, p.shift);
+        int flav = (int)std::clamp(p.flavor, 0.0f, 7.0f);
+        for (int i = 0; i < 8; ++i) {
+            float fc = std::clamp(freqMatrix[flav][i] * shiftMult, 20.0f, fs * 0.9f);
+            bank[i].setBP(fc, 1.2f, fs * 2.0f); // Running at 2x rate
+        }
+
+        // Wet path filters
+        float loFreq = (p.loCut < 1.0f) ? 20.0f : (p.loCut < 2.0f) ? 75.0f : (p.loCut < 3.0f) ? 150.0f : 300.0f;
+        loCutF.setHP(loFreq, 0.707f, fs);
+        hiCutF.setLP(std::clamp(p.hiCut, 20.0f, fs * 0.49f), 0.707f, fs);
+
+        float aAtk = std::exp(-1.0f / (fs * (p.atk + 0.001f)));
+        float aRel = std::exp(-1.0f / (fs * (p.rel + 0.01f)));
+
+        // 2. SAMPLE LOOP
+        for (int s = 0; s < numSamples; ++s) {
+            float rawL = bufferL[s];
+            float rawR = bufferR[s];
+
+            // A. Input Gain + Preamp modeling
+            float L = rawL * p.inputGain;
+            float R = rawR * p.inputGain;
+            applyPreamp(L, R, p.preType, p.grit);
+
+            // B. Stereo-Linked Envelope Follower
+            float det = std::max(std::abs(L), std::abs(R));
+            if (det > env) env = aAtk * env + (1.0f - aAtk) * det;
+            else env = aRel * env + (1.0f - aRel) * det;
+
+            // C. 1:-1 Compressor Logic
+            float cGain = calculateGain(env, p.compAmount, p.thresh);
+            L *= cGain; R *= cGain;
+
+            // Capture for Mix
+            float dryL = L; float dryR = R;
+
+            // D. 2x Oversampling Kernel (Filterbank + Distortion)
+            float l1 = L, l2 = (L + osL) * 0.5f;
+            float r1 = R, r2 = (R + osR) * 0.5f;
+            osL = L; osR = R;
+
+            auto kernel = [&](float& sL, float& sR) {
+                float fL = 0, fR = 0;
+                // Modulation of Bank
+                for(int i=0; i<8; ++i) {
+                    fL += bank[i].processL(sL) * p.bands[i];
+                    fR += bank[i].processR(sR) * p.bands[i];
+                }
+                float dynDrive = p.drive + (env * p.modDrive * 10.0f);
+                sL = applyDist(fL * dynDrive, (int)p.distMode);
+                sR = applyDist(fR * dynDrive, (int)p.distMode);
+            };
+
+            kernel(l1, r1); kernel(l2, r2);
+            float wetL = (l1 + l2) * 0.5f;
+            float wetR = (r1 + r2) * 0.5f;
+
+            // E. Wet Filters (OTO Spec: Before Mix)
+            wetL = hiCutF.processL(loCutF.processL(wetL));
+            wetR = hiCutF.processR(loCutF.processR(wetR));
+
+            // F. Mix + Master Tape
+            float mixL = (wetL * p.mix) + (dryL * (1.0f - p.mix));
+            float mixR = (wetR * p.mix) + (dryR * (1.0f - p.mix));
+
+            bufferL[s] = applyTape(mixL, p.sat, p.age, p.bump) * p.output;
+            bufferR[s] = applyTape(mixR, p.sat, p.age, p.bump) * p.output;
+        }
+    }
+
+private:
+    Biquad bank[8], loCutF, hiCutF;
+    uint32_t seed;
+    float env, osL, osR;
+
+    float fast_rand() {
+        seed = (214013 * seed + 2531011);
+        return ((float)((seed >> 16) & 0x7FFF) / 32768.0f) * 2.0f - 1.0f;
+    }
+
+    void applyPreamp(float& L, float& R, float type, float grit) {
+        int model = (int)std::clamp(type, 0.0f, 9.0f);
+        float noise = fast_rand() * grit * 0.04f;
+        switch (model) {
+            case 0: L = std::tanh(L * 1.5f) + noise; R = std::tanh(R * 1.5f) + noise; break; // Cassette Grunge
+            case 1: L = std::atan(L * 1.2f); R = std::atan(R * 1.2f); break; // Cassette Grit
+            case 2: L = std::tanh(L * 1.1f); R = std::tanh(R * 1.1f); break; // Tape Master
+            case 3: L = std::sin(std::clamp(L*1.4f, -1.5f, 1.5f)); R = std::sin(std::clamp(R*1.4f, -1.5f, 1.5f)); break; // Tape Slam
+            case 4: L = std::tanh(L * 1.8f) * 0.8f; R = std::tanh(R * 1.8f) * 0.8f; break; // Tape Thick
+            case 5: { float r = 16.0f + (1.0f-grit)*48.0f; L = std::floor(L*r)/r; R = std::floor(R*r)/r; } break; // 12bit
+            case 6: { L = std::sin(std::floor(L*8.f)/8.f * 1.57f); R = std::sin(std::floor(R*8.f)/8.f * 1.57f); } break; // 8bit
+            case 7: L = std::tanh(L + (L*L*0.2f*grit)); R = std::tanh(R + (R*R*0.2f*grit)); break; // Brit Console
+            case 8: L = std::tanh(L * (1.2f + grit)); R = std::tanh(R * (1.2f + grit)); break; // USA Console
+            case 9: break; // Modern Clean
+        }
+    }
+
+    float calculateGain(float det, float amt, float tOff) {
+        float thresh = -30.0f + (tOff * 25.0f);
+        float db = 20.0f * std::log10(det + 1e-9f);
+        if (db > thresh) {
+            // Negative Ratio Math: Gain = Signal / Threshold inversion
+            float slope = (amt > 0.7f) ? 2.0f : amt * 1.42f;
+            return std::pow(10.0f, (-(db - thresh) * slope) / 20.0f);
+        }
+        return 1.0f;
+    }
+
+    float applyDist(float x, int mode) {
+        switch (mode) {
+            case 0: return std::sin(std::clamp(x, -1.57f, 1.57f)); // BOOST (PurestDrive sin)
+            case 1: return (x > 0) ? std::tanh(x) : (x * 0.55f);   // TUBE (Asymmetric)
+            case 2: return std::clamp(x * 1.4f, -0.85f, 0.85f);    // FUZZ (Hard Clip)
+            case 3: return (x > 0.01f) ? 0.9f : (x < -0.01f ? -0.9f : 0.0f); // SQUARE (Comparator)
+            default: return x;
+        }
+    }
+
+    float applyTape(float x, float sat, float age, float bump) {
+        // Final magnetic saturation + low end weight
+        float out = std::tanh(x * (1.0f + sat));
+        float lowBump = std::sin(x * 0.5f) * bump * 0.1f;
+        return (out + lowBump) * (1.0f - (age * 0.25f));
+    }
+};
