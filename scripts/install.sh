@@ -10,8 +10,8 @@ if [ ! -d "dist/superboom" ]; then
     exit 1
 fi
 
-ssh root@move.local "mkdir -p /data/UserData/move-anything/modules/audio_fx/superboom"
-scp -r dist/superboom/* root@move.local:/data/UserData/move-anything/modules/audio_fx/superboom/
-ssh root@move.local "chmod -R a+rw /data/UserData/move-anything/modules/audio_fx/superboom"
+ssh root@move.local "mkdir -p /data/UserData/schwung/modules/audio_fx/superboom"
+scp -r dist/superboom/* root@move.local:/data/UserData/schwung/modules/audio_fx/superboom/
+ssh root@move.local "chmod -R a+rw /data/UserData/schwung/modules/audio_fx/superboom"
 
 echo "Installed to Move. Restart MoveOriginal to load the module."

@@ -1,6 +1,6 @@
 # Super Boom
 
-Master bus destructor & harmonic sculptor for [Ableton Move](https://www.ableton.com/move/), built for the [Move Everything](https://github.com/charlesvestal/move-everything) framework.
+Master bus destructor & harmonic sculptor for [Ableton Move](https://www.ableton.com/move/), built for the [Schwung](https://github.com/charlesvestal/move-everything) framework.
 
 Analog warming unit-inspired master bus destructor for Ableton Move with 10 preamp models, 8-band filterbank with vocoder mode and frequency shifting, creative compressor, EQ and tape output stage.
 
