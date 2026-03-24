@@ -366,7 +366,7 @@ static inline double apply_dist(double x, int mode) {
         case 0: return sin(sb_clampd(x, -1.57, 1.57));                  /* Boost */
         case 1: return (x > 0) ? sb_tanh(x) : (x * 0.55);              /* Tube */
         case 2: return sb_clampd(x * 1.4, -0.85, 0.85);                /* Fuzz */
-        case 3: return (x > 0.3) ? 0.9 : (x < -0.3 ? -0.9 : 0.0);    /* Square */
+        case 3: return (x > 0.01) ? 0.65 : (x < -0.01 ? -0.65 : 0.0);  /* Square */
         default: return x;
     }
 }
