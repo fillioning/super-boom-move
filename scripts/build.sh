@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build Super Boom module for Move Anything (ARM64)
+# Build Super Boom module for Schwung (ARM64)
 #
 # Automatically uses Docker for cross-compilation if needed.
 # Set CROSS_PREFIX to skip Docker (e.g., for native ARM builds).
@@ -7,25 +7,33 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-IMAGE_NAME="move-anything-builder"
+IMAGE_NAME="schwung-builder"
 
 # Check if we need Docker
 if [ -z "$CROSS_PREFIX" ] && [ ! -f "/.dockerenv" ]; then
     echo "=== Super Boom Module Build (via Docker) ==="
     echo ""
 
+    # Convert to Windows paths for Docker on MINGW
+    if [[ "$(uname -s)" == MINGW* || "$(uname -s)" == MSYS* ]]; then
+        DOCKER_REPO_ROOT="$(cygpath -w "$REPO_ROOT")"
+        DOCKER_DOCKERFILE="$(cygpath -w "$SCRIPT_DIR/Dockerfile")"
+    else
+        DOCKER_REPO_ROOT="$REPO_ROOT"
+        DOCKER_DOCKERFILE="$SCRIPT_DIR/Dockerfile"
+    fi
+
     # Build Docker image if needed
     if ! docker image inspect "$IMAGE_NAME" &>/dev/null; then
         echo "Building Docker image (first time only)..."
-        docker build -t "$IMAGE_NAME" -f "$SCRIPT_DIR/Dockerfile" "$REPO_ROOT"
+        MSYS_NO_PATHCONV=1 docker build -t "$IMAGE_NAME" -f "$DOCKER_DOCKERFILE" "$DOCKER_REPO_ROOT"
         echo ""
     fi
 
     # Run build inside container
     echo "Running build..."
-    docker run --rm \
-        -v "$REPO_ROOT:/build" \
-        -u "$(id -u):$(id -g)" \
+    MSYS_NO_PATHCONV=1 docker run --rm \
+        -v "$DOCKER_REPO_ROOT:/build" \
         -w /build \
         "$IMAGE_NAME" \
         ./scripts/build.sh
