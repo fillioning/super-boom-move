@@ -711,6 +711,36 @@ static const char *bypass_opts[]   = {"On","Byp"};
 static const char *micControl_opts[] = {"Off","On"};
 static const char *limiter_opts[] = {"Off","On"};
 
+/* Every durable control belongs here. The same list drives save and restore,
+ * so adding a parameter cannot accidentally make the two paths asymmetric. */
+static const char *const state_keys[] = {
+    "inputGain", "compAmount", "drive", "driveMix", "distMode", "flavor",
+    "shift", "mix", "output", "b1", "b2", "b3", "b4", "b5", "b6",
+    "b7", "b8", "micControl", "vocGain", "atk", "rel", "modShift",
+    "modDrive", "preType", "grit", "gate", "link", "loCut", "hiCut",
+    "sat", "age", "flutter", "bump", "thresh", "limiter", "bypass"
+};
+#define STATE_KEY_COUNT ((int)(sizeof(state_keys) / sizeof(state_keys[0])))
+
+static int get_param(void *inst, const char *key, char *buf, int buf_len);
+static void set_param(void *inst, const char *key, const char *value);
+
+static int state_read_string(const char *json, const char *key,
+                             char *out, int out_len) {
+    char needle[64];
+    int needle_len = snprintf(needle, sizeof(needle), "\"%s\":\"", key);
+    if (!json || !key || !out || out_len <= 0 || needle_len <= 0 ||
+        needle_len >= (int)sizeof(needle)) return -1;
+    const char *start = strstr(json, needle);
+    if (!start) return -1;
+    start += needle_len;
+    const char *end = strchr(start, '"');
+    if (!end || end == start || end - start >= out_len) return -1;
+    memcpy(out, start, (size_t)(end - start));
+    out[end - start] = '\0';
+    return (int)(end - start);
+}
+
 static int match_enum(const char *value, const char **opts, int count) {
     for (int i = 0; i < count; i++)
         if (strcmp(value, opts[i]) == 0) return i;
@@ -736,6 +766,16 @@ static void set_enum(float *dst, const char *value, const char **opts,
 static void set_param(void *inst, const char *key, const char *value) {
     superboom_t *s = (superboom_t *)inst;
     if (!key || !value) return;
+
+    if (strcmp(key, "state") == 0) {
+        char restored[64];
+        for (int i = 0; i < STATE_KEY_COUNT; i++) {
+            if (state_read_string(value, state_keys[i], restored,
+                                  (int)sizeof(restored)) > 0)
+                set_param(inst, state_keys[i], restored);
+        }
+        return;
+    }
 
     /* Page 1: BOOM */
     SETFR("inputGain", inputGain, 0.5, 4.0)
@@ -796,7 +836,26 @@ static void set_param(void *inst, const char *key, const char *value) {
 
 static int get_param(void *inst, const char *key, char *buf, int buf_len) {
     superboom_t *s = (superboom_t *)inst;
-    if (!key) return -1;
+    if (!key || !buf || buf_len <= 0) return -1;
+
+    if (strcmp(key, "state") == 0) {
+        int used = snprintf(buf, (size_t)buf_len, "{\"v\":1");
+        if (used < 0 || used >= buf_len) return -1;
+        for (int i = 0; i < STATE_KEY_COUNT; i++) {
+            char value[64];
+            int value_len = get_param(inst, state_keys[i], value,
+                                      (int)sizeof(value));
+            if (value_len <= 0) return -1;
+            int wrote = snprintf(buf + used, (size_t)(buf_len - used),
+                                 ",\"%s\":\"%s\"", state_keys[i], value);
+            if (wrote < 0 || wrote >= buf_len - used) return -1;
+            used += wrote;
+        }
+        if (used + 2 > buf_len) return -1;
+        buf[used++] = '}';
+        buf[used] = '\0';
+        return used;
+    }
 
     /* ── chain_params ── */
     if (strcmp(key, "chain_params") == 0) {
